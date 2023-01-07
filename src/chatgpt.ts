@@ -57,7 +57,8 @@ export class ChatGPTBot {
 
   // get trigger keyword in group chat: (@Name <keyword>)
   get chatGroupTriggerKeyword(): string {
-    return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
+    // return `@${this.botName} ${this.chatgptTriggerKeyword || ""}`;
+    return `@${this.botName} `;
   }
 
   // configure API with model API keys and run an initial test
@@ -105,9 +106,8 @@ export class ChatGPTBot {
         ? text.startsWith(chatgptTriggerKeyword)
         : true;
     } else {
-      // triggered = text.startsWith(this.chatGroupTriggerKeyword);
       // groupWhitelist
-      triggered = this.groupWhitelist.includes(roomText);
+      triggered = text.startsWith(this.chatGroupTriggerKeyword) && this.groupWhitelist.includes(roomText);
     }
     if (triggered) {
       console.log(`🎯 Chatbot triggered: ${text}`);
