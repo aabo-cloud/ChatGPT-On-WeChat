@@ -107,7 +107,9 @@ export class ChatGPTBot {
     } else {
       // triggered = text.startsWith(this.chatGroupTriggerKeyword);
       // groupWhitelist
-      triggered = this.groupWhitelist.includes(room);
+      const roomText = JSON.stringify(room);
+      console.log(roomText);
+      triggered = this.groupWhitelist.includes(roomText);
     }
     if (triggered) {
       console.log(`🎯 Chatbot triggered: ${text}`);
