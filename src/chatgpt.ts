@@ -12,8 +12,8 @@ const ChatGPTModelConfig = {
   // this model field is required
   model: "text-davinci-003",
   // add your ChatGPT model parameters below
-  temperature: 0.3,
-  max_tokens: 2000,
+  temperature: 0.8,
+  max_tokens: 4000,
 };
 
 // message size for a single reply by the bot
@@ -42,6 +42,7 @@ enum MessageType {
 export class ChatGPTBot {
   botName: string = "";
   chatgptTriggerKeyword = Config.chatgptTriggerKeyword;
+  groupWhitelist = Config.groupWhitelist;
   OpenAIConfig: any; // OpenAI API key
   OpenAI: any; // OpenAI API instance
 
@@ -96,7 +97,7 @@ export class ChatGPTBot {
   }
 
   // check whether ChatGPT bot can be triggered
-  triggerGPTMessage(text: string, isPrivateChat: boolean = false): boolean {
+  triggerGPTMessage(text: string, room: string, isPrivateChat: boolean = false): boolean {
     const chatgptTriggerKeyword = this.chatgptTriggerKeyword;
     let triggered = false;
     if (isPrivateChat) {
@@ -104,7 +105,9 @@ export class ChatGPTBot {
         ? text.startsWith(chatgptTriggerKeyword)
         : true;
     } else {
-      triggered = text.startsWith(this.chatGroupTriggerKeyword);
+      // triggered = text.startsWith(this.chatGroupTriggerKeyword);
+      // groupWhitelist
+      triggered = this.groupWhitelist.includes(room);
     }
     if (triggered) {
       console.log(`🎯 Chatbot triggered: ${text}`);
@@ -202,7 +205,7 @@ export class ChatGPTBot {
     //    2. doesn't trigger bot (e.g. wrong trigger-word)
     if (
       this.isNonsense(talker, messageType, rawText) ||
-      !this.triggerGPTMessage(rawText, isPrivateChat)
+      !this.triggerGPTMessage(rawText, room, isPrivateChat)
     ) {
       return;
     }

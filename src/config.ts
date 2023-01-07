@@ -17,6 +17,7 @@ else {
     openaiApiKey: process.env.OPENAI_API_KEY,
     openaiOrganizationID: process.env.OPENAI_ORGANIZATION_KEY,
     chatgptTriggerKeyword: process.env.CHATGPT_TRIGGER_KEYWORD,
+    groupWhitelist: process.env.GROUP_WHITELIST,
   };
 }
 
@@ -31,4 +32,5 @@ export const Config: IConfig = {
   openaiApiKey: configFile.openaiApiKey,
   openaiOrganizationID: configFile.openaiOrganizationID || "",
   chatgptTriggerKeyword: configFile.chatgptTriggerKeyword || "",
+  groupWhitelist: configFile.groupWhitelist || "",
 };
