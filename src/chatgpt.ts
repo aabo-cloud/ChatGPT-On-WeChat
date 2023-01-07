@@ -206,7 +206,10 @@ export class ChatGPTBot {
     let topic = "";
     if (room != undefined) {
       console.log(room);
-      topic = room.payload.topic;
+      const payload = room.payload;
+      if (payload != undefined) {
+        topic = payload.topic;
+      }
     }
     if (
       this.isNonsense(talker, messageType, rawText) ||
