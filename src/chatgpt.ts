@@ -205,7 +205,7 @@ export class ChatGPTBot {
     //    2. doesn't trigger bot (e.g. wrong trigger-word)
     let topic = "";
     if (room != undefined) {
-      console.log(room);
+      // console.log(room);
       const payload = room.payload;
       if (payload != undefined) {
         topic = payload.topic;
