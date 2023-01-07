@@ -97,7 +97,7 @@ export class ChatGPTBot {
   }
 
   // check whether ChatGPT bot can be triggered
-  triggerGPTMessage(text: string, room: RoomInterface, isPrivateChat: boolean = false): boolean {
+  triggerGPTMessage(text: string, roomText: string, isPrivateChat: boolean = false): boolean {
     const chatgptTriggerKeyword = this.chatgptTriggerKeyword;
     let triggered = false;
     if (isPrivateChat) {
@@ -107,8 +107,6 @@ export class ChatGPTBot {
     } else {
       // triggered = text.startsWith(this.chatGroupTriggerKeyword);
       // groupWhitelist
-      const roomText = JSON.stringify(room);
-      console.log(roomText);
       triggered = this.groupWhitelist.includes(roomText);
     }
     if (triggered) {
@@ -205,9 +203,11 @@ export class ChatGPTBot {
     // do nothing if the message:
     //    1. is irrelevant (e.g. voice, video, location...), or
     //    2. doesn't trigger bot (e.g. wrong trigger-word)
+    const roomText = JSON.stringify(room);
+    console.log(roomText);
     if (
       this.isNonsense(talker, messageType, rawText) ||
-      !this.triggerGPTMessage(rawText, room, isPrivateChat)
+      !this.triggerGPTMessage(rawText, roomText, isPrivateChat)
     ) {
       return;
     }
