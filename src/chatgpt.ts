@@ -203,11 +203,14 @@ export class ChatGPTBot {
     // do nothing if the message:
     //    1. is irrelevant (e.g. voice, video, location...), or
     //    2. doesn't trigger bot (e.g. wrong trigger-word)
-    const roomText = JSON.stringify(room);
-    console.log(roomText);
+    let topic = "";
+    if (room != undefined) {
+      console.log(room);
+      topic = room.payload.topic;
+    }
     if (
       this.isNonsense(talker, messageType, rawText) ||
-      !this.triggerGPTMessage(rawText, roomText, isPrivateChat)
+      !this.triggerGPTMessage(rawText, topic, isPrivateChat)
     ) {
       return;
     }
