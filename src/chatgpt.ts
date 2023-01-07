@@ -97,7 +97,7 @@ export class ChatGPTBot {
   }
 
   // check whether ChatGPT bot can be triggered
-  triggerGPTMessage(text: string, room: string, isPrivateChat: boolean = false): boolean {
+  triggerGPTMessage(text: string, room: RoomInterface, isPrivateChat: boolean = false): boolean {
     const chatgptTriggerKeyword = this.chatgptTriggerKeyword;
     let triggered = false;
     if (isPrivateChat) {
